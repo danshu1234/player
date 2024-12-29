@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Pressable, Image } from "react-native";
 import { StyleSheet } from "react-native";
 import { Audio } from "expo-av";
 
@@ -140,29 +140,33 @@ const Footer: FC <Props> = (props) => {
         }
     }
 
-    let playing
+    let playing;
+    let back;
+    let next;
+
+    if (props.audios.length > 1) {
+        back = <Pressable onPress={prevMusic}><Image style={{marginRight: 50, width: 20, height: 20, transform: [{rotate: '180deg'}]}} source={{ uri: "https://img.icons8.com/?size=100&id=9990&format=png&color=000000" }}/></Pressable>
+    }
+
+    if (props.audios.length > 1) {
+        next = <Pressable onPress={nextMusic}><Image style={{marginLeft: 50, width: 20, height: 20}} source={{ uri: "https://img.icons8.com/?size=100&id=9990&format=png&color=000000" }}/></Pressable>
+    }
 
     if (props.isPlay) {
-        playing = <Text style={styles.el} onPress={pauseMusic}>Пауза</Text>
+        playing = <Pressable onPress={pauseMusic}><Image source={{ uri: "https://img.icons8.com/?size=100&id=9987&format=png&color=000000" }} style={{width: 20, height: 20}}/></Pressable>
     } else {
-        playing = <Text style={styles.el} onPress={playMusic}>Играть</Text>
+        playing = <Pressable onPress={playMusic}><Image source={{ uri: "https://img.icons8.com/?size=100&id=9978&format=png&color=000000" }} style={{width: 20, height: 20}}/></Pressable>
     }
 
     return (
         <View style = {{
             flexDirection: 'row',
         }}>
-            <Text style={styles.el} onPress={prevMusic}>Назад</Text>
+            {back}
             {playing}
-            <Text onPress={nextMusic}>Далее</Text>
+            {next}
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    el: {
-        marginRight: 30,
-    }
-})
 
 export default Footer

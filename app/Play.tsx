@@ -1,6 +1,7 @@
 import { FC, useEffect } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Image, Pressable } from "react-native";
 import { Audio } from "expo-av";
+import { StyleSheet } from "react-native";
 
 interface Props{
     name: string,
@@ -71,11 +72,20 @@ const Play: FC <Props> = (props) => {
     }
     
     return (
-        <View>
-            <Text>{props.name}</Text>
-            <Button title="Пауза" onPress={pauseMusic}/>
-        </View>
+            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                <Pressable onPress={pauseMusic}><Image source={{ uri: "https://img.icons8.com/?size=100&id=9987&format=png&color=000000" }} style={playStyles.playBtn}/></Pressable>
+            <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                <Text style={{ fontSize: 20, color: 'aqua' }}>{props.name}</Text>
+            </View>
+            </View>
     )
 }
+
+const playStyles = StyleSheet.create({
+    playBtn: {
+        width: 30,
+        height: 30,
+    }
+})
 
 export default Play

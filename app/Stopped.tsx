@@ -1,6 +1,7 @@
 import { FC, useState } from "react"
-import { Button, View, Text } from "react-native"
+import { Button, View, Text, TouchableOpacity, Image, Pressable } from "react-native"
 import { Audio } from "expo-av"
+import { StyleSheet } from "react-native";
 
 interface Props{
     name: string,
@@ -13,6 +14,7 @@ interface Props{
     setIsPlay: Function,
     setFoot: Function,
     setAudio: Function,
+    setRandomFoot: Function,
 }
 
 interface Audio{
@@ -52,14 +54,30 @@ const Stopped: FC <Props> = (props) => {
         props.setIsPlay(true)
         props.setFoot(true)
         props.setAudio(props.uri)
+        props.setRandomFoot(false)
     }
 
     return (
-        <View>
-            <Text>{props.name}</Text>
-            <Button title="Играть" onPress={playMusic}/>
+        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <Pressable onPress={playMusic}>
+                <Image 
+                    source={{ uri: "https://img.icons8.com/?size=100&id=9978&format=png&color=000000" }} 
+                    style={stoppedStyles.playBtn} 
+                />
+            </Pressable>
+            <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                <Text style={{ fontSize: 20, color: 'aqua' }}>{props.name}</Text>
+            </View>
         </View>
-    )
+    );
+    
 }
+
+const stoppedStyles = StyleSheet.create({
+    playBtn: {
+        width: 30,
+        height: 30,
+    }
+})
 
 export default Stopped
